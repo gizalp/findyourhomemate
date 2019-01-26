@@ -1,18 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorTheme4"
+    android:orientation="vertical"
     tools:context=".SignUp">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/changeLanguageEN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:onClick="changeLanguageEN"
+            android:src="@drawable/en"
+            android:text="@string/english" />
+
+        <ImageButton
+            android:id="@+id/changeLanguageTR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:onClick="changeLanguageTR"
+            android:src="@drawable/tr"
+            android:text="@string/turkish" />
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/logo" />
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorTheme1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/signUpNameTextView"
+            android:layout_width="23dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Name"
+            android:textColor="@color/colorTheme4"
+            android:textIsSelectable="true"
+            tools:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/signUpNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:inputType="text"
+            android:textColor="@color/colorTheme4" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorTheme1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/signUpSurnameTextView"
+            android:layout_width="23dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Surname"
+            android:textColor="@color/colorTheme4"
+            android:textIsSelectable="true"
+            tools:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/signUpSurnameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:inputType="text"
+            android:textColor="@color/colorTheme4" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorTheme1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/signUpEmailTextView"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/email"
+            android:textColor="@color/colorTheme4"
+            android:textIsSelectable="true"
+            tools:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/signUpEmailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/sample_mail"
+            android:inputType="text"
+            android:textColor="@color/colorTheme4" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@color/colorTheme1"
+        android:text="@string/signUp"
+        android:textColor="@color/colorTheme4"
+        android:onClick="createDBConnection"/>
+
+</LinearLayout>

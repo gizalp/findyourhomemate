@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">findyourhomemate</string>
+    <string name="user_name">User Name</string>
+    <string name="email">Email</string>
+    <string name="Name">Name</string>
+    <string name="Surname">Surname</string>
+    <string name="Address">Address</string>
+    <string name="sample_mail">sample@iyte.edu.tr</string>
+    <string name="english">English</string>
+    <string name="turkish">Turkish</string>
+    <string name="signUp">Sign Up</string>
 </resources>

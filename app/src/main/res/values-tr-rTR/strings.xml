@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">findyourhomemate</string>
+    <string name="user_name">Kullancı Adı</string>
+    <string name="email">Email</string>
+    <string name="Name">Ad</string>
+    <string name="Surname">Soyad</string>
+    <string name="Address">Adres</string>
+    <string name="sample_mail">ornek@iyte.edu.tr</string>
+    <string name="english">İngilizce</string>
+    <string name="turkish">Türkçe</string>
+    <string name="signUp">Kayıt Ol</string>
+</resources>
