@@ -14,7 +14,6 @@ import java.sql.Statement;
 
 public class SignIn extends AppCompatActivity {
     Connection con=null;
-    ResultSet rs = null;
     Statement stm = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +37,10 @@ public class SignIn extends AppCompatActivity {
 
     public ResultSet isUserExist(String username) throws SQLException {
         String query ="EXEC [dbo].[isUserExist] @user_nickname="+username+";";
-        rs = stm.executeQuery(query);
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
         if(rs.next()) {
+            Toast.makeText(getApplicationContext(), "Yesss!!!", Toast.LENGTH_LONG).show();
             return rs;
         }
         else {
