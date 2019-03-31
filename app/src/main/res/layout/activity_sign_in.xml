@@ -1,82 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorTheme7"
     android:orientation="vertical"
     tools:context=".SignUp">
 
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
+    android:layout_marginLeft="20dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorTheme5"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/signInUserNameTextView"
-            android:layout_width="108dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/user_name"
-            android:textColor="@color/colorTheme4"
-            android:textIsSelectable="true"
-            tools:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/signInUserNameEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/user_name"
-            android:inputType="text"
-            android:textColor="@color/colorTheme4" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorTheme5"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/signInPasswordTextView"
-            android:layout_width="99dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/password"
-            android:textColor="@color/colorTheme4"
-            android:textIsSelectable="true"
-            tools:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/signInPasswordEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/password"
-            android:inputType="text"
-            android:textColor="@color/colorTheme4" />
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/LL1"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorTheme1"
-        android:text="@string/login"
-        android:textColor="@color/colorTheme4"
-        android:onClick="logIn"/>
+        android:gravity="center_horizontal"
+        >
+        <ImageView
+            android:layout_width="50dp"
+            android:src="@drawable/authantication"
+            android:background="@drawable/circle"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:tint="@color/colorTheme7"
+            />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTheme7"
+            android:fontFamily="sans-serif-medium"
+            android:text="LOGIN"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            />
+
+    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/IW1"
+            android:layout_width="20dp"
+            android:layout_below="@id/LL1"
+            android:layout_height="20dp"
+            android:rotation="45"
+            android:layout_marginTop="-10dp"
+            android:src="@drawable/square"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:id="@+id/RL1"
+            android:layout_below="@+id/IW1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/ImageView_UserIcon"
+                android:src="@drawable/usericon"
+                android:tint="@color/colorTheme7"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"/>
+            <EditText
+                android:id="@+id/signInUserNameEditText"
+                android:layout_width="match_parent"
+                android:paddingLeft="20dp"
+                android:background="@color/editTextBG"
+                android:layout_alignBottom="@id/ImageView_UserIcon"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/ImageView_UserIcon"
+                android:layout_height="wrap_content"
+                android:hint="User Name"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RL2"
+            android:layout_below="@+id/RL1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/ImageView_PasswordIcon"
+                android:src="@drawable/passwordicon"
+                android:tint="@color/colorTheme7"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"/>
+            <EditText
+                android:id="@+id/signInPasswordEditText"
+                android:layout_width="match_parent"
+                android:paddingLeft="20dp"
+                android:background="@color/editTextBG"
+                android:layout_alignBottom="@id/ImageView_PasswordIcon"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/ImageView_PasswordIcon"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="14dp"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_below="@id/RL2"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
+            android:text="SIGN IN"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/colorTheme7"
+            android:layout_marginTop="15dp"
+            android:onClick="logIn"/>
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_below="@id/btn1"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
+            android:text="Create an account>>"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/colorTheme7"
+            android:layout_marginTop="15dp"
+            android:onClick="goTosignUp"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+</RelativeLayout>

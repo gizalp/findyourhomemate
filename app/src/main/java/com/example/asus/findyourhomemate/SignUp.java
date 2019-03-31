@@ -67,7 +67,6 @@ public class SignUp extends AppCompatActivity {
             stm = con.createStatement();
             common.User userclass =new common.User();
             userclass.user_name = ((EditText) findViewById(R.id.signUpNameEditText)).getText().toString();
-            userclass.user_surname = ((EditText) findViewById(R.id.signUpSurnameEditText)).getText().toString();
             userclass.username = ((EditText) findViewById(R.id.signUpUserNameEditText)).getText().toString();
             userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
             userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
@@ -92,7 +91,7 @@ public class SignUp extends AppCompatActivity {
     public void createDbConnection(){
         con = DbConnect.createConnection();
         if(con == null){
-            Toast.makeText(getApplicationContext(), "We have faced with a problem when tried to connect database :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "We have faced with a problem while trying to connect database :(", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -142,4 +141,6 @@ public class SignUp extends AppCompatActivity {
         Intent launchActivity= new Intent(SignUp.this,SignIn.class);
         startActivity(launchActivity);
     }
+
+
 }

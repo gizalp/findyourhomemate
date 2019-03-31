@@ -1,5 +1,6 @@
 package com.example.asus.findyourhomemate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,10 +42,17 @@ public class SignIn extends AppCompatActivity {
         ResultSet rs = stmt.executeQuery();
         if(rs.next()) {
             Toast.makeText(getApplicationContext(), "Yesss!!!", Toast.LENGTH_LONG).show();
+            User user = new User(SignIn.this);
+            user.setName(username);
             return rs;
         }
         else {
             return rs;
         }
+    }
+
+    public void goTosignUp(View view){
+        Intent launchActivity= new Intent(SignIn.this,SignUp.class);
+        startActivity(launchActivity);
     }
 }
