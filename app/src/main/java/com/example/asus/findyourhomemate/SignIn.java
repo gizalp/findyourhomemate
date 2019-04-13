@@ -26,7 +26,8 @@ public class SignIn extends AppCompatActivity {
         createDbConnection();
         String user_name = ((EditText) findViewById(R.id.signInUserNameEditText)).getText().toString();
         String password = ((EditText) findViewById(R.id.signInPasswordEditText)).getText().toString();
-        ResultSet rs =isUserExist(user_name);
+        isUserExist(user_name);
+
     }
 
     public void createDbConnection(){
@@ -36,7 +37,7 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
-    public ResultSet isUserExist(String username) throws SQLException {
+    public void isUserExist(String username) throws SQLException {
         String query ="EXEC [dbo].[isUserExist] @user_nickname="+username+";";
         PreparedStatement stmt = con.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
@@ -44,10 +45,11 @@ public class SignIn extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Yesss!!!", Toast.LENGTH_LONG).show();
             User user = new User(SignIn.this);
             user.setName(username);
-            return rs;
+            Intent launchActivity= new Intent(SignIn.this,TimeLine.class);
+            startActivity(launchActivity);
         }
         else {
-            return rs;
+            Toast.makeText(getApplicationContext(), "Nooo!!!", Toast.LENGTH_LONG).show();
         }
     }
 

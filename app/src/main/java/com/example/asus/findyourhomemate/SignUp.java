@@ -4,11 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +34,51 @@ public class SignUp extends AppCompatActivity {
     Connection con=null;
     boolean rs = false;
     Statement stm = null;
+    private DrawerLayout mDraverLayout;
+    private ActionBarDrawerToggle mToggle;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_sign_up);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("TimeLine");
+
+
+
+
+        if(message!=null){
+            mDraverLayout = (DrawerLayout) findViewById(R.id.signUpAc);
+            mToggle = new ActionBarDrawerToggle(SignUp.this,mDraverLayout,R.string.open,R.string.close);
+            mDraverLayout.addDrawerListener(mToggle);
+            mToggle.syncState();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            navigationView = (NavigationView) findViewById(R.id.navigationViewSignUp);
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+
+                        case R.id.mprofile: {
+                            Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                            launchActivity.putExtra("TimeLine", "1");
+                            startActivity(launchActivity);
+                            break;
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            showProfile();
+
+        }else{
+            ImageView ımageViewUs = (ImageView) findViewById(R.id.us);
+            ımageViewUs.getLayoutParams().height = 0;
+            ımageViewUs.getLayoutParams().width = 0;
+        }
 
     }
 
@@ -142,5 +190,38 @@ public class SignUp extends AppCompatActivity {
         startActivity(launchActivity);
     }
 
+    public void showProfile(){
+
+        TextView textView = (TextView) findViewById(R.id.signUP);
+        textView.setText("PROFILE");
+        ImageView ımageView = (ImageView) findViewById(R.id.profilepicon);
+        ımageView.setImageResource(R.drawable.profile);
+        ImageView ımageViewUs = (ImageView) findViewById(R.id.us);
+        ımageViewUs.setImageResource(R.drawable.nopicture);
+        ımageViewUs.setMaxHeight(50);
+        ımageViewUs.setMaxHeight(50);
+        Button signupbutton = (Button)findViewById(R.id.btn1);
+        signupbutton.setText(R.string.update);
+        Button goToLoginButton = (Button)findViewById(R.id.btn2);
+        goToLoginButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
