@@ -14,11 +14,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
-
+import com.example.asus.findyourhomemate.common;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class TimeLine extends AppCompatActivity{
     RecyclerView recyclerView;
@@ -31,6 +44,12 @@ public class TimeLine extends AppCompatActivity{
     private DrawerLayout mDraverLayout;
     private ActionBarDrawerToggle mToggle;
     NavigationView navigationView;
+    Connection con=null;
+    Statement stm = null;
+    boolean rs = false;
+    String message2=null;
+    String message3=null;
+    ArrayList<common.Announcement> announcements = new ArrayList<common.Announcement>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +63,17 @@ public class TimeLine extends AppCompatActivity{
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         progressBar =  (ProgressBar) findViewById(R.id.progress);
         manager = new LinearLayoutManager(this);
-
+        Intent intent = getIntent();
+        message2 = intent.getStringExtra("MyPosts");
+        message3 = intent.getStringExtra("Favorite");
+        try {
+            getAllAnnouncements(message2,message3);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String[] a = {"23" , "3" , "66" , "73" , "88" , "9" , "2" , "1" , "41" , "63" , "4" , "5" , "8" , "97" , "89" };
         list = new ArrayList(Arrays.asList(a));
-        adapter = new Adapter(list,this);
+        adapter = new Adapter(announcements,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
 
@@ -84,10 +110,38 @@ public class TimeLine extends AppCompatActivity{
                         startActivity(launchActivity);
                         break;
                     }
+                    case R.id.mlogout: {
+                        User user = new User(TimeLine.this);
+                        user.removeUser();
+                        Intent launchActivity= new Intent(TimeLine.this,SignIn.class);
+                        startActivity(launchActivity);
+                        break;
+                    }
+                    case R.id.mposts: {
+                        Intent launchActivity= new Intent(TimeLine.this,TimeLine.class);
+                        launchActivity.putExtra("MyPosts", "1");
+                        startActivity(launchActivity);
+                        finish();
+                        break;
+                    }
+                    case R.id.mnewpost: {
+                        Intent launchActivity= new Intent(TimeLine.this,CreateNewPost.class);
+                        startActivity(launchActivity);
+                        finish();
+                        break;
+                    }
+                    case R.id.mfav: {
+                        Intent launchActivity= new Intent(TimeLine.this,TimeLine.class);
+                        launchActivity.putExtra("Favorite", "1");
+                        startActivity(launchActivity);
+                        finish();
+                        break;
+                    }
                 }
                 return false;
             }
         });
+
     }
 
     @Override
@@ -112,4 +166,54 @@ public class TimeLine extends AppCompatActivity{
         }, 5000);
     }
 
+    public void getAllAnnouncements(String myposts,String fav) throws SQLException {
+        createDbConnection();
+        String query;
+        if (con != null) {
+
+
+            if(myposts!=null){
+                User user = new User(TimeLine.this);
+                query ="EXEC [dbo].[getUserAnnouncements] @user_nickname="+user.getUserName()+";";
+            }
+            else if(fav != null){
+                User user = new User(TimeLine.this);
+                query ="EXEC [dbo].[getUserFavorites] @user_id="+Integer.parseInt(user.getID())+";";
+            }else{
+                query ="EXEC [dbo].[getAllAnnouncement] ;";
+            }
+            PreparedStatement stmt = con.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+
+                common.Announcement announcement = new common.Announcement();
+                announcement.owner = rs.getString("user_name");
+                announcement.id = rs.getString("nickname");
+                announcement.country = rs.getString("country");
+                announcement.city = rs.getString("city");
+                announcement.neighbour = rs.getString("neighbour");
+                announcement.street = rs.getString("street");
+                announcement.buildingnumber = rs.getString("building_number");
+                announcement.zipcode = rs.getString("zipcode");
+                announcement.explanation = rs.getString("explanation");
+                if(myposts == null){
+                    announcement.announcementid = rs.getString("annoucementid");
+                }
+                announcements.add(announcement);
+            }
+
+            con.close();
+        }
+    }
+    public void createDbConnection(){
+        con = DbConnect.createConnection();
+        if(con == null){
+            Toast.makeText(getApplicationContext(), "We have faced with a problem while trying to connect database :(", LENGTH_LONG).show();
+        }
+    }
+
+
+    public void announcementDetail(View view) {
+    }
 }

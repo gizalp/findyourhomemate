@@ -3,18 +3,117 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
+    android:layout_height="wrap_content"
+    android:id="@+id/items"
+    android:onClick="announcementDetail">
+    <RelativeLayout
+        android:id="@+id/RL1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtItem"
-        android:text="Timeline"
-        android:layout_marginBottom="8dp"
-        android:textSize="24sp"/>
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/ImageView_FullNameIcon"
+            android:layout_width="155dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
+            android:text="Announcement Owner"
+            android:tint="@color/colorTheme7" />
+
+        <TextView
+            android:id="@+id/txtItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ImageView_FullNameIcon"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/ImageView_FullNameIcon"
+            android:background="@color/editTextBG"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RL3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL2"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/City"
+            android:layout_width="155dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
+            android:text="City"
+            android:tint="@color/colorTheme7" />
+
+        <TextView
+            android:id="@+id/txtItem2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/City"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/City"
+            android:background="@color/editTextBG"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textSize="14dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/RL4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL3"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/Neighbour"
+            android:layout_width="155dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
+            android:text="Neighbour"
+            android:tint="@color/colorTheme7" />
+
+        <TextView
+            android:id="@+id/txtItem3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/Neighbour"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/Neighbour"
+            android:background="@color/editTextBG"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/txtItem4"
+        android:layout_below="@+id/RL4"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Explanation"
+        android:background="@color/editTextBG"
+        android:gravity="center|left"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:paddingLeft="10dp"
+        />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/colorPrimary"/>
+
 
 </LinearLayout>

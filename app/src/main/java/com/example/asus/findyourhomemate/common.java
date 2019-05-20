@@ -10,4 +10,17 @@ public class common {
         public String email;
         public String address;
     }
+
+    public static class Announcement{
+        public String owner;
+        public String id;
+        public String country;
+        public String city;
+        public String neighbour;
+        public String street;
+        public String buildingnumber;
+        public String zipcode;
+        public String explanation;
+        public String announcementid;
+    }
 }

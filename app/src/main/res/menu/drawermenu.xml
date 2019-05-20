@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item android:id="@+id/mtimeline"  android:title="Timeline"
+        android:icon="@drawable/mtimeline"/>
     <item android:id="@+id/mprofile"  android:title="Profile"
         android:icon="@drawable/profile"/>
     <item android:id="@+id/mposts"  android:title="Your Posts"
         android:icon="@drawable/yourposts"/>
+    <item android:id="@+id/mfav"  android:title="Favorites"
+        android:icon="@drawable/ic_favorite_black_24dp"/>
     <item android:id="@+id/mnewpost"  android:title="Create a New Post"
         android:icon="@drawable/newposticon"/>
     <item android:id="@+id/mlogout"  android:title="Logout"

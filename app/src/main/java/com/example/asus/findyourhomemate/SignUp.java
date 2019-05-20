@@ -24,10 +24,13 @@ import com.example.asus.findyourhomemate.DbConnect;
 import com.example.asus.findyourhomemate.common;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SignUp extends AppCompatActivity {
 
@@ -37,6 +40,9 @@ public class SignUp extends AppCompatActivity {
     private DrawerLayout mDraverLayout;
     private ActionBarDrawerToggle mToggle;
     NavigationView navigationView;
+    String message;
+    String message2;
+    common.User u=new common.User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +50,13 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("TimeLine");
+        message = intent.getStringExtra("TimeLine");
+        message2 = intent.getStringExtra("Announcement");
 
 
 
 
-        if(message!=null){
+        if(message!=null ){
             mDraverLayout = (DrawerLayout) findViewById(R.id.signUpAc);
             mToggle = new ActionBarDrawerToggle(SignUp.this,mDraverLayout,R.string.open,R.string.close);
             mDraverLayout.addDrawerListener(mToggle);
@@ -62,19 +69,65 @@ public class SignUp extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
 
                         case R.id.mprofile: {
-                            Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                            Intent launchActivity= new Intent(SignUp.this,SignUp.class);
                             launchActivity.putExtra("TimeLine", "1");
                             startActivity(launchActivity);
+                            break;
+                        }
+                        case R.id.mlogout: {
+                            new User(SignUp.this).removeUser();
+                            Intent launchActivity= new Intent(SignUp.this,SignIn.class);
+                            startActivity(launchActivity);
+                            finish();
+                            break;
+                        }
+
+                        case R.id.mposts: {
+                            Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                            launchActivity.putExtra("MyPosts", "1");
+                            startActivity(launchActivity);
+                            finish();
+                            break;
+                        }
+
+                        case R.id.mtimeline: {
+                            Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                            startActivity(launchActivity);
+                            break;
+                        }
+                        case R.id.mfav: {
+                            Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                            launchActivity.putExtra("Favorite", "1");
+                            startActivity(launchActivity);
+                            finish();
                             break;
                         }
                     }
                     return false;
                 }
             });
-
+            if(message2!=null){
+                try {
+                    getUser(message2);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             showProfile();
 
         }else{
+            final User user = new User(SignUp.this);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if(user.getName()!=""){
+                        Intent intent = new Intent(SignUp.this, TimeLine.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            },10);
             ImageView ımageViewUs = (ImageView) findViewById(R.id.us);
             ımageViewUs.getLayoutParams().height = 0;
             ımageViewUs.getLayoutParams().width = 0;
@@ -99,42 +152,72 @@ public class SignUp extends AppCompatActivity {
         setLocale(language);
     }
 
-    public void changeLanguageTR(View view) {
-        setLocale("tr");
-        recreate();
-    }
-
-    public void changeLanguageEN(View view) {
-        setLocale("en");
-        recreate();
-    }
-
-    public void  signUp(View view) throws SQLException {
-        createDbConnection();
-        if(con != null){
-            stm = con.createStatement();
-            common.User userclass =new common.User();
-            userclass.user_name = ((EditText) findViewById(R.id.signUpNameEditText)).getText().toString();
-            userclass.username = ((EditText) findViewById(R.id.signUpUserNameEditText)).getText().toString();
-            userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
-            userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
-            userclass.password = ((EditText) findViewById(R.id.signUpPasswordEditText)).getText().toString();
-
-            if(true){
-                if(true) {
-                    String query = "EXEC [dbo].[addUser] @user_name= " + userclass.user_name + ", @user_surname=" + userclass.user_surname + ", @user_email =" + userclass.email + ",@user_nickname=" + userclass.username + ",@user_address=" + userclass.address + " , @user_password=" + userclass.password + ";";
-                    rs = stm.execute(query);
-
-                    if (rs) {
-                        Toast.makeText(getApplicationContext(), "Sign up successfull!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Sign up unsuccessfull!", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-                con.close();
+        public void changeLanguageTR(View view) {
+            setLocale("tr");
+            recreate();
         }
-    }
+
+        public void changeLanguageEN(View view) {
+            setLocale("en");
+            recreate();
+        }
+
+        public void signUp(View view) throws SQLException {
+            if(message==null) {
+                createDbConnection();
+                if (con != null) {
+                    stm = con.createStatement();
+                    common.User userclass = new common.User();
+                    userclass.user_name = ((EditText) findViewById(R.id.signUpFullEditText)).getText().toString();
+                    userclass.username = ((EditText) findViewById(R.id.signUpUserNameEditText)).getText().toString();
+                    userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
+                    userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
+                    //userclass.password = ((EditText) findViewById(R.id.signUpPasswordEditText)).getText().toString();
+
+                    if (true) {
+                        if (true) {
+                            String query = "EXEC [dbo].[addUser] @user_name= " + userclass.user_name + ", @user_surname=" + userclass.user_surname + ", @user_email =" + userclass.email + ",@user_nickname=" + userclass.username + ",@user_address=" + userclass.address + " , @user_password=" + userclass.password + ";";
+                            rs = stm.execute(query);
+
+                            if (rs) {
+                                Toast.makeText(getApplicationContext(), "Sign up successfull!", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Sign up unsuccessfull!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                    con.close();
+                }
+                }
+                else{
+                    createDbConnection();
+                    if (con != null) {
+                        stm = con.createStatement();
+                        common.User userclass = new common.User();
+                        User user = new User(SignUp.this);
+                        userclass.username = user.getName();
+                        userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
+                        userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
+
+
+                                String query = "EXEC [dbo].[updateTableUser] @full_name= " + userclass.user_name + ", @address=" + userclass.address + ", @email =" + userclass.email + ";";
+                                rs = stm.execute(query);
+
+                                if (rs) {
+                                    Toast.makeText(getApplicationContext(), "Update successfull!", Toast.LENGTH_LONG).show();
+
+                                    user.setName(userclass.user_name);
+                                    user.setAddress(userclass.address);
+                                    Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
+                                    startActivity(launchActivity);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Update unsuccessfull!", Toast.LENGTH_LONG).show();
+                                }
+
+                        con.close();
+                    }
+            }
+        }
 
     public void createDbConnection(){
         con = DbConnect.createConnection();
@@ -198,12 +281,48 @@ public class SignUp extends AppCompatActivity {
         ımageView.setImageResource(R.drawable.profile);
         ImageView ımageViewUs = (ImageView) findViewById(R.id.us);
         ımageViewUs.setImageResource(R.drawable.nopicture);
+
         ımageViewUs.setMaxHeight(50);
         ımageViewUs.setMaxHeight(50);
+
         Button signupbutton = (Button)findViewById(R.id.btn1);
         signupbutton.setText(R.string.update);
         Button goToLoginButton = (Button)findViewById(R.id.btn2);
         goToLoginButton.setVisibility(View.INVISIBLE);
+        User user = new User(SignUp.this);
+
+        EditText username = (EditText) findViewById(R.id.signUpUserNameEditText);
+
+
+        EditText email = (EditText) findViewById(R.id.signUpEmailEditText);
+
+
+        EditText address = (EditText) findViewById(R.id.signUpAddressEditText);
+
+
+        EditText name = (EditText) findViewById(R.id.signUpFullEditText);
+
+
+        if(message2!=null && !u.username.equals(user.getUserName())){
+            username.setEnabled(false);
+            username.setText(u.username);
+            address.setEnabled(false);
+            address.setText(u.address);
+            email.setEnabled(false);
+            email.setText(u.email);
+            name.setEnabled(false);
+            name.setText(u.user_name);
+            signupbutton.setVisibility(View.INVISIBLE);
+            textView.setText(u.user_name.toUpperCase()+"'s PROFILE");
+        }
+        else{
+            username.setEnabled(false);
+            username.setText(user.getUserName());
+            email.setEnabled(false);
+            email.setText(user.getEmail());
+            address.setText(user.getAddress());
+            name.setText(user.getName());
+        }
     }
 
     @Override
@@ -224,4 +343,21 @@ public class SignUp extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void getUser(String username) throws SQLException {
+        String query ="EXEC [dbo].[isUserExist] @user_nickname="+username+";";
+        con = DbConnect.createConnection();
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()) {
+            Toast.makeText(getApplicationContext(), "Yesss!!!", Toast.LENGTH_LONG).show();
+            u.user_name =rs.getString("user_name");
+            u.username =rs.getString("user_nickname");
+            u.address =rs.getString("user_address");
+            u.email =rs.getString("user_email");
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Nooo!!!", Toast.LENGTH_LONG).show();
+        }
+    }
 }
