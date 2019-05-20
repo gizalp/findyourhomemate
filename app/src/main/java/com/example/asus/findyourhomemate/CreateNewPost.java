@@ -114,8 +114,9 @@ public class CreateNewPost extends AppCompatActivity {
                 launchActivity.putExtra("buildingnumber", a.buildingnumber);
                 launchActivity.putExtra("zipcode", a.zipcode);
                 launchActivity.putExtra("userid", user.getUserName());
-                startActivity(launchActivity);
                 Toast.makeText(getApplicationContext(), "The announcement created succesfully.", LENGTH_LONG).show();
+                startActivity(launchActivity);
+
             }
             else{
                 Toast.makeText(getApplicationContext(), "We have faced with a problem while trying to create your post.", LENGTH_LONG).show();

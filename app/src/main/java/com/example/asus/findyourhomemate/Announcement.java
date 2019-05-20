@@ -91,6 +91,12 @@ public class Announcement extends AppCompatActivity {
                         finish();
                         break;
                     }
+                    case R.id.mnewpost: {
+                        Intent launchActivity= new Intent(Announcement.this,CreateNewPost.class);
+                        startActivity(launchActivity);
+                        finish();
+                        break;
+                    }
                 }
                 return false;
             }

@@ -95,6 +95,12 @@ public class SignUp extends AppCompatActivity {
                             startActivity(launchActivity);
                             break;
                         }
+                        case R.id.mnewpost: {
+                            Intent launchActivity= new Intent(SignUp.this,CreateNewPost.class);
+                            startActivity(launchActivity);
+                            finish();
+                            break;
+                        }
                         case R.id.mfav: {
                             Intent launchActivity= new Intent(SignUp.this,TimeLine.class);
                             launchActivity.putExtra("Favorite", "1");
@@ -196,14 +202,14 @@ public class SignUp extends AppCompatActivity {
                         common.User userclass = new common.User();
                         User user = new User(SignUp.this);
                         userclass.username = user.getName();
-                        userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
+                        userclass.user_name = ((EditText) findViewById(R.id.signUpFullEditText)).getText().toString();
                         userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
 
-
-                                String query = "EXEC [dbo].[updateTableUser] @full_name= " + userclass.user_name + ", @address=" + userclass.address + ", @email =" + userclass.email + ";";
+                        boolean rs = false;
+                                String query = "EXEC [dbo].[updateTableUser] @full_name= " + userclass.user_name + ", @address=" + userclass.address + ", @id =" + user.getID() + ";";
                                 rs = stm.execute(query);
 
-                                if (rs) {
+                                if (!rs) {
                                     Toast.makeText(getApplicationContext(), "Update successfull!", Toast.LENGTH_LONG).show();
 
                                     user.setName(userclass.user_name);
