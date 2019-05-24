@@ -22,7 +22,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class Announcement extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -39,6 +42,7 @@ public class Announcement extends AppCompatActivity {
     Statement stm = null;
     Boolean rs ;
     ImageView fav ;
+    ImageView del ;
     common.Announcement announcement = new common.Announcement();
 
     User user ;
@@ -47,6 +51,7 @@ public class Announcement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcement);
         fav= (ImageView)findViewById(R.id.fav);
+        del= (ImageView)findViewById(R.id.del);
         user = new User(Announcement.this);
         mDraverLayout = (DrawerLayout) findViewById(R.id.signUpAcAN);
         mToggle = new ActionBarDrawerToggle(Announcement.this,mDraverLayout,R.string.open,R.string.close);
@@ -114,11 +119,23 @@ public class Announcement extends AppCompatActivity {
         announcement.zipcode= intent.getStringExtra("zipcode");
         announcement.explanation= intent.getStringExtra("explanation");
         announcement.announcementid= intent.getStringExtra("annoucementid");
+        announcement.telno= intent.getStringExtra("telno");
+        String create= intent.getStringExtra("CREATE");
+        if(create == null){
+            if (announcement.id.equals(user.getUserName())) {
+                fav.setVisibility(View.INVISIBLE);
 
-        if(announcement.id.equals(user.getUserName())){
-            fav.setVisibility(View.INVISIBLE);
+            }
+            else{
+                del.setVisibility(View.INVISIBLE);
+            }
         }
 
+        if(create != null){
+            Toast.makeText(getApplicationContext(), "The announcement created succesfully.", LENGTH_LONG).show();
+            del.setVisibility(View.VISIBLE);
+            fav.setVisibility(View.INVISIBLE);
+        }
 
         TextView username = (TextView) findViewById(R.id.txtItema);
         username.setText(announcement.owner);
@@ -141,14 +158,18 @@ public class Announcement extends AppCompatActivity {
         TextView Zipcode = (TextView) findViewById(R.id.txtItem6a);
         Zipcode.setText(announcement.zipcode);
 
+        TextView Telno = (TextView) findViewById(R.id.txtItem7a);
+        Telno.setText(announcement.telno);
+
         TextView Explanation = (TextView) findViewById(R.id.txtItem8a);
         Explanation.setText(announcement.explanation);
         try {
-            if(hasFavorite(Integer.parseInt(user.getID().toString()),Integer.parseInt(announcement.announcementid.toString()))){
-                fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-            }
-            else{
-                fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            if(create == null) {
+                if (hasFavorite(Integer.parseInt(user.getID().toString()), Integer.parseInt(announcement.announcementid.toString()))) {
+                    fav.setImageResource(R.drawable.ic_favorite_black_24dp);
+                } else {
+                    fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -219,6 +240,32 @@ public class Announcement extends AppCompatActivity {
         }
         else{
             return false;
+        }
+    }
+
+    public void delete(View view) {
+        con = DbConnect.createConnection();
+        if (con != null) {
+            try {
+                stm = con.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            String query = "EXEC [dbo].[deleteAnnouncement] @anid= " + announcement.announcementid +";";
+            try {
+                rs = stm.execute(query);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if (!rs) {
+                Toast.makeText(getApplicationContext(), "The announcement deleted succesfully.", LENGTH_LONG).show();
+                Intent launchActivity= new Intent(Announcement.this,TimeLine.class);
+                launchActivity.putExtra("MyPosts", "1");
+                startActivity(launchActivity);
+            } else {
+                Toast.makeText(getApplicationContext(), "Please try again!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

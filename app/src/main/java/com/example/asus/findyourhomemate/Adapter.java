@@ -43,7 +43,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.VHolder> {
             @Override
             public void onClick(View v) {
                 String position = Integer.toString(i);
-                Toast.makeText(context.getApplicationContext(),position, LENGTH_LONG).show();
                 Intent launchActivity= new Intent(context,Announcement.class);
                 launchActivity.putExtra("owner", data.get(i).owner);
                 launchActivity.putExtra("city", data.get(i).city);
@@ -55,6 +54,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.VHolder> {
                 launchActivity.putExtra("zipcode", data.get(i).zipcode);
                 launchActivity.putExtra("userid", data.get(i).id);
                 launchActivity.putExtra("annoucementid", data.get(i).announcementid);
+                launchActivity.putExtra("telno", data.get(i).telno);
                 context.startActivity(launchActivity);
             }
         });

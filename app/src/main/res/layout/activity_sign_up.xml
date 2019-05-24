@@ -173,17 +173,49 @@
                     android:layout_toRightOf="@id/ImageView_EMAİLICON"
                     android:background="@color/editTextBG"
                     android:hint="Email"
+                    android:inputType="textEmailAddress"
                     android:paddingLeft="20dp"
                     android:textSize="14dp" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/RL7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RL4"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:id="@+id/ImageView_signUpPassword"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/colorPrimary"
+                    android:padding="8dp"
+                    android:src="@drawable/passwordicon"
+                    android:tint="@color/colorTheme7" />
+
+                <EditText
+                    android:id="@+id/signUpPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/ImageView_signUpPassword"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/ImageView_signUpPassword"
+                    android:background="@color/editTextBG"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dp"
+                    android:textSize="14dp" />
+            </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/RL6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/RL4"
+                android:layout_below="@+id/RL7"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp">

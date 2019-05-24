@@ -95,15 +95,17 @@ public class CreateNewPost extends AppCompatActivity {
         a.buildingnumber = ((EditText) findViewById(R.id.txtItem5a)).getText().toString();
         a.zipcode = ((EditText) findViewById(R.id.txtItem6a)).getText().toString();
         a.explanation = ((EditText) findViewById(R.id.txtItem8a)).getText().toString();
+        a.telno = ((EditText) findViewById(R.id.txtItem7a)).getText().toString();
         con = DbConnect.createConnection();
         if(con == null){
             Toast.makeText(getApplicationContext(), "We have faced with a problem when tried to connect database :(", Toast.LENGTH_LONG).show();
         }else{
             boolean rs = false;
             stm = con.createStatement();
-            String query ="EXEC [dbo].[createaPost]  @country='"+a.country.toString()+"', @city='"+a.city.toString()+"', @neighbour='"+a.neighbour.toString()+"', @street='"+a.street.toString()+"', @explanation='"+a.explanation.toString()+"', @buildingnumber='"+a.buildingnumber.toString()+"', @zipcode='"+a.zipcode.toString()+"', @user_id="+ 8+";";
+            String query ="EXEC [dbo].[createaPost]  @country='"+a.country.toString()+"', @city='"+a.city.toString()+"', @neighbour='"+a.neighbour.toString()+"', @street='"+a.street.toString()+"', @explanation='"+a.explanation.toString()+"', @buildingnumber='"+a.buildingnumber.toString()+"', @zipcode='"+a.zipcode.toString()+"', @telno='"+a.telno.toString()+"', @user_id="+ user.getID()+";";
             rs = stm.execute(query);
             if(!rs) {
+                Toast.makeText(getApplicationContext(), "The announcement created succesfully.", LENGTH_LONG).show();
                 Intent launchActivity= new Intent(CreateNewPost.this,Announcement.class);
                 launchActivity.putExtra("owner", user.getName());
                 launchActivity.putExtra("city", a.city);
@@ -114,7 +116,10 @@ public class CreateNewPost extends AppCompatActivity {
                 launchActivity.putExtra("buildingnumber", a.buildingnumber);
                 launchActivity.putExtra("zipcode", a.zipcode);
                 launchActivity.putExtra("userid", user.getUserName());
-                Toast.makeText(getApplicationContext(), "The announcement created succesfully.", LENGTH_LONG).show();
+                launchActivity.putExtra("telno", a.telno);
+                launchActivity.putExtra("CREATE", "1");
+
+
                 startActivity(launchActivity);
 
             }

@@ -108,6 +108,7 @@ public class SignUp extends AppCompatActivity {
                             finish();
                             break;
                         }
+
                     }
                     return false;
                 }
@@ -178,20 +179,21 @@ public class SignUp extends AppCompatActivity {
                     userclass.username = ((EditText) findViewById(R.id.signUpUserNameEditText)).getText().toString();
                     userclass.email = ((EditText) findViewById(R.id.signUpEmailEditText)).getText().toString();
                     userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
-                    //userclass.password = ((EditText) findViewById(R.id.signUpPasswordEditText)).getText().toString();
+                    userclass.password = ((EditText) findViewById(R.id.signUpPasswordEditText)).getText().toString();
 
-                    if (true) {
-                        if (true) {
-                            String query = "EXEC [dbo].[addUser] @user_name= " + userclass.user_name + ", @user_surname=" + userclass.user_surname + ", @user_email =" + userclass.email + ",@user_nickname=" + userclass.username + ",@user_address=" + userclass.address + " , @user_password=" + userclass.password + ";";
+
+                            String query = "EXEC [dbo].[addUser] @user_name= '" + userclass.user_name.toString() + "', @user_email ='" + userclass.email.toString() + "',@user_nickname='" + userclass.username.toString() + "',@user_address='" + userclass.address.toString() + "' , @user_password='" + userclass.password.toString() + "';";
+                            boolean rs = false;
                             rs = stm.execute(query);
 
-                            if (rs) {
+                            if (!rs) {
                                 Toast.makeText(getApplicationContext(), "Sign up successfull!", Toast.LENGTH_LONG).show();
+                                Intent launchActivity= new Intent(SignUp.this,SignIn.class);
+                                startActivity(launchActivity);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Sign up unsuccessfull!", Toast.LENGTH_LONG).show();
                             }
-                        }
-                    }
+
                     con.close();
                 }
                 }
@@ -206,7 +208,7 @@ public class SignUp extends AppCompatActivity {
                         userclass.address = ((EditText) findViewById(R.id.signUpAddressEditText)).getText().toString();
 
                         boolean rs = false;
-                                String query = "EXEC [dbo].[updateTableUser] @full_name= " + userclass.user_name + ", @address=" + userclass.address + ", @id =" + user.getID() + ";";
+                                String query = "EXEC [dbo].[updateTableUser] @full_name= '" + userclass.user_name + "', @address='" + userclass.address + "', @id =" + user.getID() + ";";
                                 rs = stm.execute(query);
 
                                 if (!rs) {

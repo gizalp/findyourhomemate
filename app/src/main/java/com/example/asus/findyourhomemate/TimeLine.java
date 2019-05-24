@@ -137,6 +137,12 @@ public class TimeLine extends AppCompatActivity{
                         finish();
                         break;
                     }
+                    case R.id.mtimeline: {
+                        Intent launchActivity= new Intent(TimeLine.this,TimeLine.class);
+                        startActivity(launchActivity);
+                        finish();
+                        break;
+                    }
                 }
                 return false;
             }
@@ -197,9 +203,9 @@ public class TimeLine extends AppCompatActivity{
                 announcement.buildingnumber = rs.getString("building_number");
                 announcement.zipcode = rs.getString("zipcode");
                 announcement.explanation = rs.getString("explanation");
-                if(myposts == null){
-                    announcement.announcementid = rs.getString("annoucementid");
-                }
+                announcement.telno = rs.getString("telno");
+                announcement.announcementid = rs.getString("annoucementid");
+
                 announcements.add(announcement);
             }
 

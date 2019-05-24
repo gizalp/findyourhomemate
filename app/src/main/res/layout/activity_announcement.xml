@@ -14,18 +14,40 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
-
+            <RelativeLayout
+                android:layout_below="@+id/fav"
+                android:id="@+id/RL10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
             <ImageView
                 android:id="@+id/fav"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:onClick="addToFavorites"
                 android:layout_weight="1"
                 android:src="@drawable/ic_favorite_border_black_24dp"
-                android:tint="@android:color/holo_red_dark" />
+                android:tint="@android:color/holo_red_dark"
+                android:gravity="center|left"
+                android:layout_width="155dp"
+                android:layout_height="40dp"/>
+
+            <ImageView
+                android:id="@+id/del"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="delete"
+                android:src="@drawable/ic_close_black_24dp"
+                android:tint="@android:color/holo_red_light"
+                android:layout_alignBottom="@id/fav"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/fav"
+                android:gravity="center|left"
+                />
+            </RelativeLayout>
     <RelativeLayout
-        android:layout_below="@+id/fav"
+        android:layout_below="@+id/RL10"
         android:id="@+id/RL1a"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
@@ -233,12 +255,40 @@
             android:textSize="14dp" />
     </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/RL9a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RL6a"
+                android:layout_marginTop="20dp">
 
+                <TextView
+                    android:id="@+id/Telno"
+                    android:layout_width="155dp"
+                    android:layout_height="40dp"
+                    android:background="@color/colorPrimary"
+                    android:paddingLeft="10dp"
+                    android:gravity="center|left"
+                    android:text="Phone Number"
+                    android:tint="@color/colorTheme7" />
+
+                <TextView
+                    android:id="@+id/txtItem7a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/Telno"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/Telno"
+                    android:background="@color/editTextBG"
+                    android:gravity="center|left"
+                    android:paddingLeft="10dp"
+                    android:textSize="14dp" />
+            </RelativeLayout>
 
 
     <TextView
         android:id="@+id/txtItem8a"
-        android:layout_below="@+id/RL7a"
+        android:layout_below="@+id/RL9a"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="Explanation"

@@ -22,5 +22,6 @@ public class common {
         public String zipcode;
         public String explanation;
         public String announcementid;
+        public String telno;
     }
 }
